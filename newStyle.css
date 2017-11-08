@@ -124,3 +124,11 @@ label {
 	padding-top: 5px;
 	font-size: 1.0em;
 }
+
+ul.sub-nav {
+    display: none;
+}
+
+ul.visible {
+    display: block;
+}
