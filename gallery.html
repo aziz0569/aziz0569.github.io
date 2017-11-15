@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="newStyle.css" />
+    <title>Phone Mart (Online Mobile Shopping Store)</title>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="myScript.js"></script>
+    <style>
+        /* Slideshow container */
+        .slideshow-container {
+          max-width: 1100px;
+          position: relative;
+          margin: auto;
+        }
+
+        /* Caption text */
+        .text {
+          color: #f2f2f2;
+          font-size: 15px;
+          padding: 8px 12px;
+          position: absolute;
+          bottom: 8px;
+          width: 100%;
+          text-align: center;
+        }
+
+        /* Number text (1/3 etc) */
+        .numbertext {
+          color: #f2f2f2;
+          font-size: 12px;
+          padding: 8px 12px;
+          position: absolute;
+          top: 0;
+        }
+
+        /* The dots/bullets/indicators */
+        .dot {
+          height: 15px;
+          width: 15px;
+          margin: 0 2px;
+          background-color: #bbb;
+          border-radius: 50%;
+          display: inline-block;
+          transition: background-color 0.6s ease;
+        }
+
+        .active {
+          background-color: #717171;
+        }
+
+        /* Fading animation */
+        .fade {
+          -webkit-animation-name: fade;
+          -webkit-animation-duration: 2.5s;
+          animation-name: fade;
+          animation-duration: 2.5s;
+        }
+
+        @-webkit-keyframes fade {
+          from {opacity: .4} 
+          to {opacity: 1}
+        }
+
+        @keyframes fade {
+          from {opacity: .4} 
+          to {opacity: 1}
+        }
+
+        /* On smaller screens, decrease text size */
+        @media only screen and (max-width: 300px) {
+          .text {font-size: 11px}
+        }
+    </style>
+</head>
+<body style="overflow-y: hidden; overflow-x: hidden;">
+    <div class="left">
+        <ul>
+            <li><a href="index.html">Home</a></li> 
+            <li class="parent"><a href="#">Mobiles&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down"></i></a> 
+                <ul class="sub-nav">
+                    <li><a href="iphone.html">Iphones</a></li>
+                    <li><a href="android.html">Android Phones</a></li>
+                    <li><a href="#">Others</a></li>
+                </ul>
+            </li>           
+            <li><a href="gallery.html">Product Gallery</a></li>
+            <li><a href="cont.html">Contact Us</a></li>
+        </ul>
+    </div>
+    <div id="right">  
+        <div class="header">
+            <img src="logo.jpg" alt="" class="header-img">
+        </div>
+        <div class="content">
+            <div class="slideshow-container">
+            <div class="mySlides fade">
+              <div class="numbertext">1 / 3</div>
+              <img src="android_bg.jpg" style="width:100%">
+              <div class="text">Caption Text</div>
+            </div>
+            <div class="mySlides fade">
+              <div class="numbertext">2 / 3</div>
+              <img src="iphone_bg2.jpg" style="width:100%">
+              <div class="text">Caption Two</div>
+            </div>
+            <div class="mySlides fade">
+              <div class="numbertext">3 / 3</div>
+              <img src="both.jpg" style="width:100%">
+              <div class="text">Caption Three</div>
+            </div>
+                <div class="mySlides fade">
+              <div class="numbertext">3 / 3</div>
+              <img src="both1.jpg" style="width:100%">
+              <div class="text">Caption Three</div>
+            </div>
+            </div>
+            <br>
+            <div style="text-align:center">
+              <span class="dot"></span> 
+              <span class="dot"></span> 
+              <span class="dot"></span> 
+            </div>
+        </div>
+
+        <script>
+        var slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            for (i = 0; i < slides.length; i++) {
+               slides[i].style.display = "none";  
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";  
+            dots[slideIndex-1].className += " active";
+            setTimeout(showSlides, 2000); // Change image every 2 seconds
+        }
+        </script>
+        
+        
+    </div>
+</body>
+</html>
