@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Great Race</title>
+    <style>
+        #traffic_light {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            background-color: black;
+        }
+        #light {
+            position: relative;
+            margin: 2% auto;
+            background-color: red;
+            -moz-border-radius: 50px/50px;
+            -webkit-border-radius: 50px 50px;
+            border-radius: 50px/50px;
+            width: 95px;
+            height: 95px;
+        }
+        div#participants {
+            position: relative;
+            top: 110px;
+        }
+        #hare {
+            position: relative;
+            -webkit-transition: 1s ease-in;
+            -moz-transition: 1s ease-in;
+            -o-transition: 1s ease-in;
+            transition: 1s ease-in;
+        }
+        #tortoise {
+            position: relative;
+            -webkit-transition: 1s ease-in;
+            -moz-transition: 1s ease-in;
+            -o-transition: 1s ease-in;
+            transition: 1s ease-in;
+        }
+
+
+        .container {
+            visibility: hidden;
+            width: 380px;
+            height: 200px;
+            margin: 0 auto;
+            border-radius: 50px/50px;
+            position: relative;
+            background: linear-gradient(45deg, #D3D3D3 25%, rgba(255, 255, 255, 0) 25%) 0 0,
+                        linear-gradient(45deg, rgba(255, 255, 255, 0) 75%, #D3D3D3 75%) 0 0,
+                        linear-gradient(45deg, rgba(255, 255, 255, 0) 75%, #D3D3D3 75%) -3em 3em,
+                        linear-gradient(45deg, #D3D3D3 25%, rgba(255, 255, 255, 0) 25%) 3em -3em;
+            background-size: 6em 6em;
+            background-color: white;
+            font: 10px/2 'Trebuchet MS', Verdana, sans-serif;
+        }
+        .container h1 {
+            margin: 0;
+            padding: 0;
+            font-family: Arial;
+            font-size: 3em;
+            color: black;
+            position: relative;
+            text-align: center;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    </style>
+    <script>
+
+        function randomInteger(min, max) {
+            var rand = min - 0.5 + Math.random() * (max - min + 1);
+            rand = Math.round(rand);
+            return rand;
+        }
+
+        function checkFinish(currentCoordinate, participantSize) {
+            return currentCoordinate >= document.body.clientWidth - participantSize;
+        }
+
+        function setCoordinateX(participant, currentValue, value) {
+            participant.style.left = currentValue + value + "px";
+        }
+
+        function finish(participants) {
+            participants.forEach(function (p) {
+                setCoordinateX(p, document.body.clientWidth - p.offsetWidth, 0);
+            });
+        }
+
+        function congratulation(winner) {
+            var finishMessage = document.querySelector(".container");
+            finishMessage.style.visibility = "visible";
+            finishMessage.querySelector("h1").innerHTML = winner.title + " is winner!!!";
+            finishMessage.addEventListener("click", anew);
+        }
+
+        function anew() {
+            var light = document.querySelector("#light");
+            var finishMessage = document.querySelector(".container");
+            light.style.background = "red";
+            finishMessage.style.visibility = "hidden";
+            document.querySelector("#hare").style.left = "0px";
+            document.querySelector("#tortoise").style.left = "0px";
+        }
+
+        function ready() {
+
+            console.log("start");
+            var trafficLight = document.getElementById("traffic_light"),
+                light = document.getElementById("light"),
+                finishMessage = document.querySelector(".container"),
+                eventInterval = 500;
+
+            trafficLight.addEventListener("click", function () {
+
+                // lights up green
+                light.style.background = "green";
+                var raceID = setInterval(function () {
+                    var hare = document.querySelector("#hare"),
+                        tortoise = document.querySelector("#tortoise"),
+                        curCoordinateHare = parseInt(window.getComputedStyle(hare).left.split("px")[0]),
+                        curCoordinateTortoise = parseInt(window.getComputedStyle(tortoise).left.split("px")[0]),
+                        hareSize = hare.offsetWidth,
+                        tortoiseSize = tortoise.offsetWidth,
+                        // settings min and max speed
+                        hareSpeed = randomInteger(1, 100),
+                        tortoiseSpeed = randomInteger(1, 100);
+
+                    if(checkFinish(curCoordinateHare, hareSize) || checkFinish(curCoordinateTortoise, tortoiseSize)){
+                        clearInterval(raceID);
+                        var winner = curCoordinateHare > curCoordinateTortoise ? hare : tortoise;
+                        finish([hare, tortoise]);
+                        congratulation(winner);
+                        console.log("finish");
+
+                    } else {
+                        //new coordinate hare
+                        setCoordinateX(hare, curCoordinateHare, hareSpeed);
+                        // new coordinate tortoise
+                        setCoordinateX(tortoise, curCoordinateTortoise, tortoiseSpeed);
+                    }
+
+                }, eventInterval)
+
+            });
+
+            finishMessage.addEventListener("click", anew);
+        }
+        document.addEventListener("DOMContentLoaded", ready);
+
+
+    </script>
+</head>
+<body>
+
+<div id="traffic_light" title="Click me to start the Great Race!">
+    <div id="light"></div>
+</div>
+<div id="participants">
+    <img src="img/tortoise.png" id="tortoise" title="Tortoise"><br>
+    <img src="img/hare.png" id="hare" title="Hare">
+</div>
+
+
+<div class="container">
+    <h1></h1>
+</div>
+
+
+</body>
+</html>
